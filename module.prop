@@ -1,0 +1,6 @@
+id=crond_clear_the_blacklist
+name=crond 清理黑名单列表
+version=v3.2.0
+versionCode=20210929
+author=阿巴酱(Petit-Abba)
+description=CROND: [ 等待刷新.. ] Repo: https://github.com/Petit-Abba/crond_clear_the_blacklist/
