@@ -10,7 +10,7 @@
            ├── 白名单.prop        <--- 防止输入错误后保存: 如/data
            └── 黑名单.prop        <--- 输入需要定时删除的 文件或文件夹 完整路径
 ```
-
+![](https://github.com/Petit-Abba/black_and_white_list/blob/1e94a02eeeb14b59be00afd3f5455d4fb0264596/A/Picture/3.jpg)
 ## 说明
 - 模块刷入重启后，只在用户`解锁设备才开始生效`，所以你要是说你刷了模块开不了机，那就是其他问题，雨我无瓜。
 - 使用`crond`定时命令，**不会浪费或占用系统资源**。
@@ -22,7 +22,5 @@
 - 模块尽可能以最小的资源和最快的速度完成清理黑名单任务。
 
 ## 黑白名单示意图
-
-![](https://github.com/Petit-Abba/black_and_white_list/blob/1e94a02eeeb14b59be00afd3f5455d4fb0264596/A/Picture/3.jpg)
 ![](https://github.com/Petit-Abba/black_and_white_list/blob/663b05b4ffba84ee633a6fda6e0ed5040def2ddd/A/Picture/1.jpg)
 ![](https://github.com/Petit-Abba/black_and_white_list/blob/663b05b4ffba84ee633a6fda6e0ed5040def2ddd/A/Picture/2.jpg)
