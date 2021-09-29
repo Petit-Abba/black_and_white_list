@@ -1,7 +1,7 @@
 # black_and_white_list
 [![Stars](https://img.shields.io/github/stars/Petit-Abba/black_and_white_list?label=stars)](https://github.com/Petit-Abba)
 [![Download](https://img.shields.io/github/downloads/Petit-Abba/black_and_white_list/total)](https://github.com/Petit-Abba/black_and_white_list/releases)
-[![Release](https://img.shields.io/github/v/release/Petit-Abba/backup_script_zh-CN?label=release)](https://github.com/Petit-Abba/black_and_white_list/releases/latest)
+[![Release](https://img.shields.io/github/v/release/Petit-Abba/black_and_white_list?label=release)](https://github.com/Petit-Abba/black_and_white_list/releases/latest)
 [![License](https://img.shields.io/github/license/Petit-Abba/black_and_white_list?label=License)](https://choosealicense.com/licenses/gpl-3.0)
 
 `模块刷入重启后查看`
