@@ -14,7 +14,7 @@
            ├── 白名单.prop        <--- 防止输入错误后保存: 如/data
            └── 黑名单.prop        <--- 输入需要定时删除的 文件或文件夹 完整路径
 ```
-![](https://github.com/Petit-Abba/black_and_white_list/blob/14001f876593bc72b4bf62d8b38ab2638d91bfb6/A/Picture/3.jpg)
+![](https://github.com/Petit-Abba/black_and_white_list/blob/d1c84b93da671f5c14ad8e3c09d6bf7e78536704/A/Picture/3.jpg)
 - Magisk20.4+
 - Android 9+
 - arm64*
