@@ -52,18 +52,18 @@ main_for() {
          logd "[continue] --白名单DIR: ${i}"
          continue
       fi
-      rm -rf "${i}" && (
+      rm -rf "${i}" && {
         let DIR++
         logd "[rm] --黑名单DIR: ${i}"
         echo "${DIR}" > ${tmp_date}/dir
-        )
+        }
     fi
     if [[ -f "${i}" ]]; then
       if [[ "$(cat ${White_List} | grep "${i}")" != "" ]]; then
         logd "[continue] --白名单FILE: ${i}"
         continue
       fi
-        rm -rf "${i}" && {
+      rm -rf "${i}" && {
         let FILE++ 
         logd "[rm] --黑名单FILE: ${i}"
         echo "${FILE}" > ${tmp_date}/file
