@@ -74,7 +74,7 @@ if [[ "${Screen}" = "亮屏" ]]; then
   main_for
   echo "${FILE}" > ${tmp_date}/file
   echo "${DIR}" > ${tmp_date}/dir
-  sed -i "/^description=/c description=CROND: [ 今日已清除: ${FILE}个黑名单文件 | ${DIR}个黑名单文件夹 ] - Repo: https://github.com/Petit-Abba/crond_clear_the_blacklist/" "${MODDIR%/script}/module.prop"
+  sed -i "/^description=/c description=CROND: [ 今日已清除: ${FILE}个黑名单文件 | ${DIR}个黑名单文件夹 ] - Repo: https://github.com/Petit-Abba/black_and_white_list/" "${MODDIR%/script}/module.prop"
 else
   echo "息屏"
   if [[ -f ${MODDIR}/tmp/Screen_on ]]; then
