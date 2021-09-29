@@ -23,16 +23,25 @@ main_while_read() {
       fi
       com_xiaomi_market
       [[ $? == 2 ]] && continue
-      rm -rf "${line}" && let DIR++ && logd "[rm] --黑名单DIR: ${line}"
+      rm -rf "${line}" && {
+        let DIR++
+        logd "[rm] --黑名单DIR: ${line}"
+        echo "${DIR}" > ${tmp_date}/dir
+        }
     fi
     if [[ -f "${line}" ]]; then
       if [[ "$(cat ${White_List} | grep "${line}")" != "" ]]; then
         logd "[continue] --白名单FILE: ${line}"
         continue
       fi
-      rm -rf "${line}" && let FILE++ && logd "[rm] --黑名单FILE: ${line}"
+      rm -rf "${line}" && {
+        let FILE++
+        logd "[rm] --黑名单FILE: ${line}"
+        echo "${FILE}" > ${tmp_date}/file
+        }
     fi
   done
+
 }
 
 #使用for是为了支持通配符*
@@ -43,14 +52,22 @@ main_for() {
          logd "[continue] --白名单DIR: ${i}"
          continue
       fi
-      rm -rf "${i}" && let DIR++ && logd "[rm] --黑名单DIR: ${i}"
+      rm -rf "${i}" && (
+        let DIR++
+        logd "[rm] --黑名单DIR: ${i}"
+        echo "${DIR}" > ${tmp_date}/dir
+        )
     fi
     if [[ -f "${i}" ]]; then
       if [[ "$(cat ${White_List} | grep "${i}")" != "" ]]; then
         logd "[continue] --白名单FILE: ${i}"
         continue
       fi
-      rm -rf "${i}" && let FILE++ && logd "[rm] --黑名单FILE: ${i}"
+        rm -rf "${i}" && {
+        let FILE++ 
+        logd "[rm] --黑名单FILE: ${i}"
+        echo "${FILE}" > ${tmp_date}/file
+        }
     fi
   done
 }
@@ -70,10 +87,12 @@ if [[ "${Screen}" = "亮屏" ]]; then
   fi
   FILE="$(cat ${tmp_date}/file)"
   DIR="$(cat ${tmp_date}/dir)"
+
   main_while_read
   main_for
-  echo "${FILE}" > ${tmp_date}/file
-  echo "${DIR}" > ${tmp_date}/dir
+
+  FILE="$(cat ${tmp_date}/file)"
+  DIR="$(cat ${tmp_date}/dir)"
   sed -i "/^description=/c description=CROND: [ 今日已清除: ${FILE}个黑名单文件 | ${DIR}个黑名单文件夹 ] - Repo: https://github.com/Petit-Abba/black_and_white_list/" "${MODDIR%/script}/module.prop"
 else
   echo "息屏"
