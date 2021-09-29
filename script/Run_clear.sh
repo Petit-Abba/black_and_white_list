@@ -23,7 +23,7 @@ main_while_read() {
       fi
       com_xiaomi_market
       [[ $? == 2 ]] && continue
-      rm -rf "${line}" && logd "[rm] --黑名单DIR: ${line}" && let DIR++
+      rm -rf "${line}" && logd "[rm] --黑名单DIR: ${line}" && DIR="$((${DIR}+1))"
     fi
     if [[ -f "${line}" ]]; then
       if [[ "$(cat ${White_List} | grep "${line}")" != "" ]]; then
@@ -43,7 +43,7 @@ main_for() {
          logd "[continue] --白名单DIR: ${i}"
          continue
       fi
-      rm -rf "${i}" && logd "[rm] --黑名单DIR: ${i}" && let DIR++
+      rm -rf "${i}" && logd "[rm] --黑名单DIR: ${i}" && DIR="$((${DIR}+1))"
     fi
     if [[ -f "${i}" ]]; then
       if [[ "$(cat ${White_List} | grep "${i}")" != "" ]]; then
@@ -72,8 +72,8 @@ if [[ "${Screen}" = "亮屏" ]]; then
   DIR="$(cat ${tmp_date}/dir)"
   main_while_read
   main_for
-  echo "${DIR}" > ${tmp_date}/dir
   echo "${FILE}" > ${tmp_date}/file
+  echo "${DIR}" > ${tmp_date}/dir
   sed -i "/^description=/c description=CROND: [ 今日已清除: ${FILE}个黑名单文件 | ${DIR}个黑名单文件夹 ] - Repo: https://github.com/Petit-Abba/crond_clear_the_blacklist/" "${MODDIR%/script}/module.prop"
 else
   echo "息屏"
