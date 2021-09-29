@@ -10,7 +10,7 @@
            ├── 白名单.prop        <--- 防止输入错误后保存: 如/data
            └── 黑名单.prop        <--- 输入需要定时删除的 文件或文件夹 完整路径
 ```
-![](https://github.com/Petit-Abba/black_and_white_list/blob/14001f876593bc72b4bf62d8b38ab2638d91bfb6/A/Picture/3.jpg)
+![](https://github.com/Petit-Abba/black_and_white_list/blob/f0405a598959643cb22b0a856814a9a3c745c2b2/A/Picture/3.jpg)
 ## 说明
 - 模块刷入重启后，只在用户`解锁设备才开始生效`，所以你要是说你刷了模块开不了机，那就是其他问题，雨我无瓜。
 - 使用`crond`定时命令，**不会浪费或占用系统资源**。
