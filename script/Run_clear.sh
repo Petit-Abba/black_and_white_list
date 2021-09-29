@@ -23,18 +23,14 @@ main_while_read() {
       fi
       com_xiaomi_market
       [[ $? == 2 ]] && continue
-      rm -rf "${line}"
-      logd "[rm] --黑名单DIR: ${line}"
-      DIR="$((${DIR}+1))"
+      rm -rf "${line}" && logd "[rm] --黑名单DIR: ${line}" && DIR="$((${DIR}+1))"
     fi
     if [[ -f "${line}" ]]; then
       if [[ "$(cat ${White_List} | grep "${line}")" != "" ]]; then
         logd "[continue] --白名单FILE: ${line}"
         continue
       fi
-      rm -rf "${line}"
-      logd "[rm] --黑名单FILE: ${line}"
-      let FILE++
+      rm -rf "${line}" && logd "[rm] --黑名单FILE: ${line}" && let FILE++
     fi
   done
 }
@@ -47,18 +43,14 @@ main_for() {
          logd "[continue] --白名单DIR: ${i}"
          continue
       fi
-      rm -rf "${i}"
-      logd "[rm] --黑名单DIR: ${i}"
-      DIR="$((${DIR}+1))"
+      rm -rf "${i}" && logd "[rm] --黑名单DIR: ${i}" && DIR="$((${DIR}+1))"
     fi
     if [[ -f "${i}" ]]; then
       if [[ "$(cat ${White_List} | grep "${i}")" != "" ]]; then
         logd "[continue] --白名单FILE: ${i}"
         continue
       fi
-      rm -rf "${i}"
-      logd "[rm] --黑名单FILE: ${i}"
-      let FILE++
+      rm -rf "${i}" && logd "[rm] --黑名单FILE: ${i}" && let FILE++
     fi
   done
 }
