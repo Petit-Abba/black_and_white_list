@@ -22,6 +22,7 @@
 - 模块尽可能以最小的资源和最快的速度完成清理黑名单任务。
 
 ## 黑白名单示意图
-![](https://github.com/Petit-Abba/black_and_white_list/blob/663b05b4ffba84ee633a6fda6e0ed5040def2ddd/A/Picture/3.jpg)
+
+![](https://github.com/Petit-Abba/black_and_white_list/blob/1e94a02eeeb14b59be00afd3f5455d4fb0264596/A/Picture/3.jpg)
 ![](https://github.com/Petit-Abba/black_and_white_list/blob/663b05b4ffba84ee633a6fda6e0ed5040def2ddd/A/Picture/1.jpg)
 ![](https://github.com/Petit-Abba/black_and_white_list/blob/663b05b4ffba84ee633a6fda6e0ed5040def2ddd/A/Picture/2.jpg)
