@@ -1,13 +1,15 @@
 #如果使用*通配符 记得把重要路径文件/文件夹写到白名单
 #文件示例: 本模块的.bak文件
 /sdcard/Android/clear_the_blacklist/*.bak
+/sdcard/Android/clear_the_blacklist/定时任务/*.bak
 
 #文件夹示例:
-/data/media/0/Download/thumbs/
 /data/media/0/ramdump/
 
 #如果文件删除不了，不到万不得已才使用[ /data/media/0/"文件\文件夹" ]
+
 #下面你可以自定义了！
+#black标识符
 /storage/emulated/0/Download/.common
 
 

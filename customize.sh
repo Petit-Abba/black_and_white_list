@@ -2,7 +2,7 @@ SKIPUNZIP=0
 
 MyPrint() {
   echo "$@"
-  sleep 0.05
+  sleep 0.04
 }
 
 get_choose() {
@@ -20,42 +20,99 @@ get_choose() {
   done
 }
 
-case ${ARCH} in
-  arm64*)
-    [[ ${API} -lt 28 ]] && abort "- 设备Android $(getprop ro.build.version.release)版本过低 请升级至Android 9+"
-    MyPrint "- 设备支持"
-    MyPrint "- 架构: ${ARCH}"
-    MyPrint "- 安卓: $(getprop ro.build.version.release)"
-    ;;
-  *)  abort "- 不支持的架构: ${ARCH}"
-esac
-
-MyPrint "------------------------------------------------------------"
-MyPrint "- [&]请先阅读 避免一些不必要的问题"
-MyPrint "------------------------------------------------------------"
 MyPrint " "
-MyPrint "- 1.模块刷入重启后，只在用户解锁设备才开始生效。"
-MyPrint "- 2.使用crond定时命令，不会浪费或占用系统资源。"
-MyPrint "- 3.模块自定义路径: /sdcard/Android/clear_the_blacklist/"
-MyPrint " "
-MyPrint "- ps: 只要你手机开机，只要你使用任何软件，设备本身就已经开始进"
-MyPrint "行各种频繁读写，如果你认为该模块会损耗设备闪存，那么请按音量-。"
-MyPrint " "
-MyPrint "- https://github.com/Petit-Abba/black_and_white_list/"
-MyPrint " "
-MyPrint "------------------------------------------------------------"
+MyPrint "╔════════════════════════════════════"
+MyPrint "║  - [&]请先阅读 避免一些不必要的问题"
+MyPrint "╠════════════════════════════════════"
+MyPrint "║"
+MyPrint "║  - 1.模块刷入重启后，只在用户解锁设备才开始生效。"
+MyPrint "║  - 2.使用crond定时命令，不会浪费或占用系统资源。"
+MyPrint "║  - 3.模块自定义路径: /sdcard/Android/clear_the_blacklist/"
+MyPrint "║ "
+MyPrint "║  - ps: 只要你手机开机，只要你使用任何软件，设备本身就已经开始进"
+MyPrint "║行各种频繁读写，如果你认为该模块会损耗设备闪存，那么请按音量－。"
+MyPrint "║ "
+MyPrint "║  - https://github.com/Petit-Abba/black_and_white_list/"
+MyPrint "║ "
+MyPrint "╚════════════════════════════════════"
 MyPrint " "
 MyPrint "- 是否安装？(请选择)"
 MyPrint "- 按音量键＋: 安装 √"
 MyPrint "- 按音量键－: 退出 ×"
 if [[ $(get_choose) = 0 ]]; then
   black_and_white_list_path="/sdcard/Android/clear_the_blacklist"
+  cron_set_dir="${black_and_white_list_path}/定时任务"
+
   Black_List="${black_and_white_list_path}/黑名单.prop"
   White_List="${black_and_white_list_path}/白名单.prop"
-  [[ ! -d ${black_and_white_list_path} ]] && mkdir -p ${black_and_white_list_path}
-  [[ ! -f ${Black_List} ]] && cp -r ${MODPATH}/files/黑名单.prop ${black_and_white_list_path}/
-  [[ ! -f ${White_List} ]] && cp -r ${MODPATH}/files/白名单.prop ${black_and_white_list_path}/
-  rm -rf ${MODPATH}/files/
+  cron_set_file="${cron_set_dir}/定时设置.ini"
+  Run_cron_sh="${cron_set_dir}/Run_cron.sh"
+
+  magisk_util_functions="/data/adb/magisk/util_functions.sh"
+  grep -q 'lite_modules' "${magisk_util_functions}" && modules_path="lite_modules" || modules_path="modules"
+  mod_path="/data/adb/${modules_path}/crond_clear_the_blacklist"
+  script_dir="${mod_path}/script"
+
+  [[ -d ${script_dir}/tmp/DATE ]] && {
+    MyPrint " "
+    MyPrint "- [?] 发现模块记录文件(清理数量统计)"
+    MyPrint "- 是否保留？(请选择)"
+    MyPrint "- 按音量键＋: 保留 √"
+    MyPrint "- 按音量键－: 不保留 ×"
+    if [[ $(get_choose) = 0 ]]; then
+      MyPrint "- 保留"
+      cp -r ${script_dir}/tmp/ ${MODPATH}/script/
+      [[ -f ${MODPATH}/script/tmp/Screen_on ]] && rm -rf ${MODPATH}/script/tmp/Screen_on
+    else
+      MyPrint "- 不保留"
+    fi
+  }
+
+  [[ -f ${script_dir}/set_cron.d/root ]] && {
+    MyPrint " "
+    MyPrint "- [?] 发现模块自定义定时运行文件"
+    MyPrint "- 是否保留？(请选择)"
+    MyPrint "- 按音量键＋: 保留 √"
+    MyPrint "- 按音量键－: 不保留 ×"
+    if [[ $(get_choose) = 0 ]]; then
+      MyPrint "- 保留"
+      cp -r ${script_dir}/set_cron.d/root ${MODPATH}/script/set_cron.d/
+    else
+      MyPrint "- 不保留"
+    fi
+  }
+
+  [[ -d ${black_and_white_list_path} ]] && {
+    MyPrint " "
+    MyPrint "- [?] 文件夹已存在: ${black_and_white_list_path}"
+    MyPrint "- 是否删除文件夹重建？(请选择)"
+    MyPrint "- 按音量键＋: 删除 √"
+    MyPrint "- 按音量键－: 不删除 ×"
+    if [[ $(get_choose) = 0 ]]; then
+      crond_pid="$(ps -ef | grep -v 'grep' | grep 'crond' | grep 'crond_clear_the_blacklist' | awk '{print $1}')"
+      if [[ ! -z "${crond_pid}" ]]; then
+        for kill_pid in ${crond_pid}; do
+          kill -9 ${kill_pid} && MyPrint "- 杀死crond进程: ${kill_pid}"
+        done
+      fi
+      rm -rf ${black_and_white_list_path} && MyPrint "- 删除${black_and_white_list_path}文件夹"
+      MyPrint " "
+    else
+      MyPrint "- 不删除"
+      MyPrint " "
+    fi
+  }
+
+  [[ -d ${cron_set_dir} ]] || mkdir -p ${cron_set_dir}
+  [[ -f ${Black_List} ]] || cp -r ${MODPATH}/AndroidFile/黑名单.prop ${black_and_white_list_path}/
+  [[ -f ${White_List} ]] || cp -r ${MODPATH}/AndroidFile/白名单.prop ${black_and_white_list_path}/
+  [[ -f ${cron_set_file} ]] || cp -r ${MODPATH}/AndroidFile/定时任务/定时设置.ini ${cron_set_dir}/
+  [[ -f ${Run_cron_sh} ]] && rm -rf ${Run_cron_sh}
+  cp -r ${MODPATH}/AndroidFile/定时任务/Run_cron.sh ${cron_set_dir}/
+  rm -rf ${MODPATH}/AndroidFile/
+  echo "test" > ${cron_set_dir}/test.bak
+
+  go_to_coolapk() {
   if [[ "$(pm list package | grep -w 'com.coolapk.market')" != "" ]];then
     MyPrint " "
     MyPrint "- 你安装了酷安 是否前往作者主页？(请选择)"
@@ -63,13 +120,15 @@ if [[ $(get_choose) = 0 ]]; then
     MyPrint "- 按音量键－: “爷不去”"
     if [[ $(get_choose) = 0 ]]; then
       am start -d 'coolmarket://u/1132618' >/dev/null 2>&1
-      MyPrint "- “🌚看什么看？没见过阿巴，阿巴阿巴？”"
+      #MyPrint "- "
       MyPrint " "
     else
-      MyPrint "- “😭你一定会回来的”"
+      MyPrint "- 甘霖凉"
       MyPrint " "
     fi
   fi
+  }
+  #go_to_coolapk
 else
   abort "- 已选择退出"
 fi
