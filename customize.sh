@@ -62,7 +62,6 @@ if [[ $(get_choose) = 0 ]]; then
     if [[ $(get_choose) = 0 ]]; then
       MyPrint "- 保留"
       cp -r ${script_dir}/tmp/ ${MODPATH}/script/
-      [[ -f ${MODPATH}/script/tmp/Screen_on ]] && rm -rf ${MODPATH}/script/tmp/Screen_on
     else
       MyPrint "- 不保留"
     fi
