@@ -13,7 +13,7 @@ com_xiaomi_market() {
 main_while_read() {
   cat ${Black_List} | grep -v '#' | grep -v '*' | while read line; do
     if [[ -d "${line}" ]]; then
-      if [[ ! -z "$(cat ${White_List} | grep "${line}")" ]]; then
+      if [[ "$(cat ${White_List} | grep "${line}")" != "" ]]; then
          logd "[continue] --白名单DIR: ${line}"
          continue
       fi
@@ -26,7 +26,7 @@ main_while_read() {
       }
     fi
     if [[ -f "${line}" ]]; then
-      if [[ ! -z "$(cat ${White_List} | grep "${line}")" ]]; then
+      if [[ "$(cat ${White_List} | grep "${line}")" != "" ]]; then
         logd "[continue] --白名单FILE: ${line}"
         continue
       fi
@@ -43,7 +43,7 @@ main_while_read() {
 main_for() {
   for i in `cat ${Black_List} | grep -v '#' | grep '*'`; do
     if [[ -d "${i}" ]]; then
-      if [[ ! -z "$(cat ${White_List} | grep "${i}")" ]]; then
+      if [[ "$(cat ${White_List} | grep "${i}")" != ""]]; then
          logd "[continue] --白名单DIR: ${i}"
          continue
       fi
@@ -54,7 +54,7 @@ main_for() {
       }
     fi
     if [[ -f "${i}" ]]; then
-      if [[ ! -z "$(cat ${White_List} | grep "${i}")" ]]; then
+      if [[ "$(cat ${White_List} | grep "${i}")" != "" ]]; then
         logd "[continue] --白名单FILE: ${i}"
         continue
       fi
@@ -69,12 +69,12 @@ main_for() {
 
 find_black_main() {
   find_black="$(find /data/ -type f -name 'black')"
-  if [[ ! -z ${find_black} ]]; then
+  if [[ ${find_black} != "" ]]; then
     identifier="$(cat ${Black_List} | grep -w '#black标识符')"
     [[ -z ${identifier} ]] && echo "#black标识符" >> ${Black_List}
     for black_file_path in ${find_black}; do
       BLACK="${black_file_path%/black}"
-      if [[ ! -z "$(cat ${White_List} | grep "${BLACK}")" ]]; then
+      if [[ "$(cat ${White_List} | grep "${BLACK}")" != "" ]]; then
         logd "[continue black] --白名单DIR: ${BLACK}"
         continue
       fi
