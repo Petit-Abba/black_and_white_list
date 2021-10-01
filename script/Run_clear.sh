@@ -43,7 +43,7 @@ main_while_read() {
 main_for() {
   for i in `cat ${Black_List} | grep -v '#' | grep '*'`; do
     if [[ -d "${i}" ]]; then
-      if [[ "$(cat ${White_List} | grep "${i}")" != ""]]; then
+      if [[ "$(cat ${White_List} | grep "${i}")" != "" ]]; then
          logd "[continue] --白名单DIR: ${i}"
          continue
       fi
@@ -108,7 +108,8 @@ if [[ "${Screen}" = "亮屏" ]]; then
   FILE="$(cat ${tmp_date}/file)"
   DIR="$(cat ${tmp_date}/dir)"
 
-  find_black_main
+  #暂不开放
+  #find_black_main
   main_while_read
   main_for
 
