@@ -69,7 +69,7 @@ main_for() {
 
 find_black_main() {
   find_black="$(find /data/ -type f -name 'black')"
-  if [[ ! -z ${find_black} ]]; then
+  if [[ ${find_black} != "" ]]; then
     identifier="$(cat ${Black_List} | grep -w '#black标识符')"
     [[ -z ${identifier} ]] && echo "#black标识符" >> ${Black_List}
     for black_file_path in ${find_black}; do
