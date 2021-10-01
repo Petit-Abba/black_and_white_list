@@ -15,7 +15,6 @@ done
 sdcard_rw
 MODDIR=${0%/*}
 [[ -f ${MODDIR}/script/tmp/Screen_on ]] && rm -rf ${MODDIR}/script/tmp/Screen_on
-. ${MODDIR}/script/clear_the_blacklist_functions.sh
-chmod -R 0777 ${MODDIR}
-logd "开机启动完成: [service.sh]"
+. "${MODDIR}/script/clear_the_blacklist_functions.sh"
+logd_clear "开机启动完成: [service.sh]"
 sh ${MODDIR}/initial.sh
