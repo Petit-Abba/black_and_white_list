@@ -96,7 +96,7 @@ find_black_main() {
     for black_file_path in ${find_black}; do
       BLACK="${black_file_path%/black}"
       if [[ "$(cat ${White_List} | grep "${BLACK}")" != "" ]]; then
-        print_pd_white_list "${BLACK}" "[continue black] --白名单DIR: ${BLACK}"
+        logd "[continue black] --白名单DIR: ${BLACK}"
         continue
       fi
       logd "[add black] --黑名单DIR: ${BLACK}/"
