@@ -1,9 +1,5 @@
 #!/system/bin/sh
 
-clear_the_blacklist_crond_pid() {
-  ps -ef | grep -v 'grep' | grep 'crond' | grep 'crond_clear_the_blacklist' | awk '{print $2}'
-}
-
 CN_AMPM() {
   case $1 in
     1|3|4|5)  export $2="凌晨"  ;;
@@ -16,20 +12,24 @@ CN_AMPM() {
 }
 
 magisk_util_functions="/data/adb/magisk/util_functions.sh"
+[[ ! -f ${magisk_util_functions} ]] && exit 66
 grep -q 'lite_modules' "${magisk_util_functions}" && modules_path="lite_modules" || modules_path="modules"
 mod_path="/data/adb/${modules_path}/crond_clear_the_blacklist"
-bash_path="${mod_path}/script/bin/bash"
-[[ ! -f ${magisk_util_functions} ]] && exit 88
-[[ ! -e ${bash_path} ]] && exit 88
-[[ ! -d ${mod_path} ]] && exit 88
+
+mod_bin_path="${mod_path}/script/bin"
+[[ ! -d ${mod_bin_path} ]] && exit 88
+filepath="${mod_bin_path}/busybox"
+tools_path="${mod_bin_path}/tools"
+. "${tools_path}/bin.sh"
 
 set_path="${0%/*}"
 set_file="${set_path}/定时设置.ini"
 cron_d_path="${mod_path}/script/set_cron.d"
-. ${mod_path}/script/clear_the_blacklist_functions.sh
+[[ ! -d ${cron_d_path} ]] && mkdir -p ${cron_d_path}
+. "${mod_path}/script/clear_the_blacklist_functions.sh"
 
 if [[ -f ${set_file} ]]; then
-  . ${set_file}
+  . "${set_file}"
   if [[ $? != 0 ]]; then
     echo "- [!]: 文件读取异常，请审查(设置定时.ini)文件内容！" && exit 1
   fi
@@ -111,22 +111,26 @@ if [[ ${what_time_run} == y ]]; then
 else
   logd_ini="minute=\"${minute}\" | what_time_run=\"${what_time_run}\""
   crond_rule="*/${minute} * * * *"
-  print_set="24H/每隔${minute}分钟运行一次。"
+  print_set="24H 每隔${minute}分钟运行一次"
 fi
 
 echo "- 定时设置 | ${crond_rule}"
 echo "- 内容解读 | ${print_set}"
+echo "${print_set}" > "${mod_path}/print.txt"
 
-if [[ ! -z $(clear_the_blacklist_crond_pid) ]]; then
-  echo "- 杀死上次定时 | pid: $(clear_the_blacklist_crond_pid)"
-  kill -9 $(clear_the_blacklist_crond_pid)
+clear_the_blacklist_crond_pid_1="$(ps -ef | grep -v 'grep' | grep 'crond' | grep 'crond_clear_the_blacklist' | awk '{print $1}')"
+if [[ ! -z ${clear_the_blacklist_crond_pid_1} ]]; then
+  echo "- 杀死上次定时 | pid: ${clear_the_blacklist_crond_pid_1}"
+  kill -9 ${clear_the_blacklist_crond_pid_1}
 fi
 
-[[ ! -d ${cron_d_path} ]] && mkdir -p ${cron_d_path}
-alias crond="$(magisk --path)/.magisk/busybox/crond"
+alias crond="${filepath}/crond"
+alias bash="${filepath}/bash"
 chmod -R 0777 ${mod_path}
-echo "${crond_rule} ${bash_path} \"${mod_path}/script/Run_clear.sh\"" > ${cron_d_path}/root
+echo "${crond_rule} ${filepath}/bash \"${mod_path}/script/Run_clear.sh\"" > ${cron_d_path}/root
 crond -c "${cron_d_path}" && {
-  echo "- 定时启动成功 | pid: $(clear_the_blacklist_crond_pid)"
+  clear_the_blacklist_crond_pid_2="$(ps -ef | grep -v 'grep' | grep 'crond' | grep 'crond_clear_the_blacklist' | awk '{print $1}')"
+  echo "- 定时启动成功 | pid: ${clear_the_blacklist_crond_pid_2}"
   log_md_set_cron_clear
+  [[ -f ${mod_path}/script/Run_clear.sh ]] && bash ${mod_path}/script/Run_clear.sh >/dev/null || echo "- 模块脚本缺失！"
 }
