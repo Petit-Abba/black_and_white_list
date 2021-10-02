@@ -7,11 +7,11 @@ filepath="$MODDIR/script/bin/busybox"
 #alias crond="${MODDIR}/script/bin/busybox/crond"
 
 # 调用Magisk的命令 感谢@情非得已c
-export MAGISKTMP="$(magisk --path 2>/dev/null)"
+MAGISKTMP="$(magisk --path 2>/dev/null)"
 [[ -z "$MAGISKTMP" ]] && MAGISKTMP="/sbin"
-export crond="$MAGISKTMP/.magisk/busybox/crond"
+alias crond="$MAGISKTMP/.magisk/busybox/crond"
 
-export bash="${MODDIR}/script/bin/busybox/bash"
+alias bash="${MODDIR}/script/bin/busybox/bash"
 chmod -R 0777 "${MODDIR}"
 logd "初始化完成: [initial.sh]"
 

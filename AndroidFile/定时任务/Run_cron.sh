@@ -125,12 +125,12 @@ if [[ ! -z ${clear_the_blacklist_crond_pid_1} ]]; then
 fi
 
 # 调用Magisk的命令 感谢@情非得已c
-export MAGISKTMP="$(magisk --path 2>/dev/null)"
+MAGISKTMP="$(magisk --path 2>/dev/null)"
 [[ -z "$MAGISKTMP" ]] && MAGISKTMP="/sbin"
-export crond="$MAGISKTMP/.magisk/busybox/crond"
+alias crond="$MAGISKTMP/.magisk/busybox/crond"
 
 #alias crond="${filepath}/crond"
-export bash="${filepath}/bash"
+alias bash="${filepath}/bash"
 chmod -R 0777 ${mod_path}
 
 echo "# set cron $(date '+%m/%d %T')" > ${cron_d_path}/root
@@ -139,6 +139,5 @@ crond -c "${cron_d_path}" && {
   clear_the_blacklist_crond_pid_2="$(ps -ef | grep -v 'grep' | grep 'crond' | grep 'crond_clear_the_blacklist' | awk '{print $1}')"
   echo "- 定时启动成功 | pid: ${clear_the_blacklist_crond_pid_2}"
   log_md_set_cron_clear
-  echo "- crond: ${crond}"
   [[ -f ${mod_path}/script/Run_clear.sh ]] && bash ${mod_path}/script/Run_clear.sh >/dev/null || echo "- 模块脚本缺失！"
 }
