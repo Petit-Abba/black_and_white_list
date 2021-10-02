@@ -124,10 +124,12 @@ if [[ ! -z ${clear_the_blacklist_crond_pid_1} ]]; then
   kill -9 ${clear_the_blacklist_crond_pid_1}
 fi
 
-alias crond="${filepath}/crond"
+#alias crond="${filepath}/crond"
+alias crond="$(magisk --path)/.magisk/busybox/crond"
 alias bash="${filepath}/bash"
 chmod -R 0777 ${mod_path}
-echo "${crond_rule} ${filepath}/bash \"${mod_path}/script/Run_clear.sh\"" > ${cron_d_path}/root
+echo "# set cron $(date '+%m/%d %T')" > ${cron_d_path}/root
+echo "${crond_rule} ${filepath}/bash \"${mod_path}/script/Run_clear.sh\"" >> ${cron_d_path}/root
 crond -c "${cron_d_path}" && {
   clear_the_blacklist_crond_pid_2="$(ps -ef | grep -v 'grep' | grep 'crond' | grep 'crond_clear_the_blacklist' | awk '{print $1}')"
   echo "- 定时启动成功 | pid: ${clear_the_blacklist_crond_pid_2}"
