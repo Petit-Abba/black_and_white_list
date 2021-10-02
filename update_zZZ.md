@@ -1,5 +1,8 @@
 # 版本更新信息
 
+### v4.3.2 (21/10/02)
+- 更新调用crond命令判断，使安卓11以下设备正常使用。
+
 
 ### v4.3.1 (21/10/02)
 - 修复自定义定时不生效问题 `alias crond="${MODDIR}/script/bin/busybox/crond"` --> `alias crond="$(magisk --path)/.magisk/busybox/crond"`

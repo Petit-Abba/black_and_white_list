@@ -21,6 +21,7 @@
 ```
 ![](https://github.com/Petit-Abba/black_and_white_list/blob/d1c84b93da671f5c14ad8e3c09d6bf7e78536704/A/Picture/3.jpg)
 - Magisk20.4+
+- 支持Magisk Lite
 
 ## 说明
 - 模块刷入重启后，只在用户`解锁设备才开始生效`，所以你要是说你刷了模块开不了机，那就是其他问题，雨我无瓜。
