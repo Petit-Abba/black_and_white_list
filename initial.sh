@@ -5,8 +5,13 @@ filepath="$MODDIR/script/bin/busybox"
 . "${tools_path}/bin.sh"
 . "${MODDIR}/script/clear_the_blacklist_functions.sh"
 #alias crond="${MODDIR}/script/bin/busybox/crond"
-alias crond="$(magisk --path)/.magisk/busybox/crond"
-alias bash="${MODDIR}/script/bin/busybox/bash"
+
+# 调用Magisk的命令 感谢@情非得已c
+export MAGISKTMP="$(magisk --path 2>/dev/null)"
+[[ -z "$MAGISKTMP" ]] && MAGISKTMP="/sbin"
+export crond="$MAGISKTMP/.magisk/busybox/crond"
+
+export bash="${MODDIR}/script/bin/busybox/bash"
 chmod -R 0777 "${MODDIR}"
 logd "初始化完成: [initial.sh]"
 
