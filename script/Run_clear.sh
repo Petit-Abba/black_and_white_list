@@ -28,7 +28,7 @@ com_xiaomi_market() {
 # 寻找black文件位置
 main_find_black() {
   local IFS=$'\n'
-  find_black="$(find /data/ -type f -name 'black')"
+  find_black="$(find /data/media/ -type f -name 'black')"
   if [[ ! -z $find_black ]]; then
     identifier="$(cat $Black_List | grep -w '#black标识符')"
     [[ -z $identifier ]] && echo "#black标识符" >> $Black_List
