@@ -34,6 +34,11 @@ else
   echo "- [!]: 缺少$set_file文件" && exit 2
 fi
 
+#mod_version=`cat $mod_path/module.prop | grep "version=" | sed 's/version=//g'`
+#mod_description=`cat $mod_path/module.prop | grep "description=" | sed 's/description=//g' | awk -F '[' '{print $2}' | awk -F ']' '{print $1}'`
+#echo "- 版本: $mod_version"
+#echo "- 信息:$mod_description"
+
 case $minute in
   [1-9]*)
     if [[ $minute -le 60 ]]; then
