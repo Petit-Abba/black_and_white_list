@@ -1,36 +1,51 @@
 #为了防止手残 可以把不被删除的文件或者文件夹输入进来
 #下面是例子 一行一个
-/
-/*
 
-/data
+/sdcard/Android/clear_the_blacklist/*.prop
+/sdcard/Android/clear_the_blacklist/*.md
+/sdcard/Android/clear_the_blacklist/*/*.sh
+/sdcard/Android/clear_the_blacklist/*/*.ini
+
+
+/*/
 /data/
-/data/*
-/data/media/0
+/data/*/
 /data/media/0/
-/data/media/0/*
-/data/media/0/Download
 /data/media/0/Download/
-/data/media/0/Android
 /data/media/0/Android/
+/data/media/0/Android/data/
+/data/media/0/Android/media/
+/data/media/0/Android/obb/
+/data/media/0/DCIM/
+/data/media/0/MIUI/
+/data/media/0/Movies/
+/data/media/0/Music/
+/data/media/0/Pictures/
 
-/storage
 /storage/
-/storage/emulated/0
 /storage/emulated/0/
-/storage/emulated/0/*
-/storage/emulated/0/Download
 /storage/emulated/0/Download/
-/storage/emulated/0/Android
 /storage/emulated/0/Android/
+/storage/emulated/0/Android/data/
+/storage/emulated/0/Android/media/
+/storage/emulated/0/Android/obb/
+/storage/emulated/0/DCIM/
+/storage/emulated/0/MIUI/
+/storage/emulated/0/Movies/
+/storage/emulated/0/Music/
+/storage/emulated/0/Pictures/
 
-/sdcard
 /sdcard/
-/sdcard/*
-/sdcard/Download
 /sdcard/Download/
-/sdcard/Android
 /sdcard/Android/
+/sdcard/Android/data/
+/sdcard/Android/media/
+/sdcard/Android/obb/
+/sdcard/DCIM/
+/sdcard/MIUI/
+/sdcard/Movies/
+/sdcard/Music/
+/sdcard/Pictures/
 
 
 
