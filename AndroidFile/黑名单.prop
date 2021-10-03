@@ -1,7 +1,7 @@
 #如果使用*通配符 记得把重要路径文件/文件夹写到白名单
 #文件示例: 本模块的.bak文件
 /sdcard/Android/clear_the_blacklist/*.bak
-/sdcard/Android/clear_the_blacklist/定时任务/*.bak
+/sdcard/Android/clear_the_blacklist/*/*.bak
 
 #文件夹示例:
 /data/media/0/ramdump/
