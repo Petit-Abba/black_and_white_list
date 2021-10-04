@@ -69,7 +69,7 @@ main_for() {
   for i in $(echo "$Black_List_Expand" | grep -v '*'); do
     # 文件夹
     if [[ -d "$i" ]]; then
-      case $i in *'/.') continue ;; *'/..') continue ;; esac
+      case $i in *'/.') continue ;; *'/./') continue ;; *'/..') continue ;; *'/../') continue ;; esac
       if [[ ! -z $(echo "$White_List_Expand" | grep -w "$i") ]]; then
         print_pd_white_list "$i" "白名单DIR: $i"
         continue
