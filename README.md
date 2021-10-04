@@ -42,6 +42,26 @@
 - 使用`crond`定时命令，**不会浪费或占用系统资源**。
 - 只要你手机开机，只要使用任何软件，设备本身就**已经开始进行各种频繁读写**，该模块`锁屏时不执行`，`解锁设备`并且设备存在黑名单内的路径`文件/文件夹`时，才会进行删除操作。太注重于闪存性能，干脆使用[小灵通](https://baike.baidu.com/item/%E5%B0%8F%E7%81%B5%E9%80%9A/94341?ivk_sa=1024630g)。
 
+## 黑名单列表(仅供参考)
+> 模块没有内置任何规则，但这里可以给一些参考，或许会有人需要。
+> 如果你有好用的规则，也可以提交~
+`点击复制`
+```
+# dropbox文件夹内有不断生成的日志文件(dropbox规则)
+/data/system/dropbox/*
+
+# app应用的所有缓存文件夹内的所有文件(缓存规则)
+/data/user/*/*/cache/*
+/data/user/*/*/.cache/*
+/data/media/*/Android/data/*/cache/*
+# 如果你使用了缓存规则后有app出现加载问题
+# 可以在白名单中添加相应路径进行跳过
+# 比如跳过清理酷安的缓存(其他同理 正常来说清理缓存并不影响应用任何东西): 
+#/data/user/*/com.coolapk.market/cache/*
+#/data/user/*/com.coolapk.market/.cache/*
+#/data/media/*/Android/data/com.coolapk.market/cache/*
+```
+
 ## 黑白名单示意图
 ![](https://github.com/Petit-Abba/black_and_white_list/blob/663b05b4ffba84ee633a6fda6e0ed5040def2ddd/A/Picture/1.jpg)
 ![](https://github.com/Petit-Abba/black_and_white_list/blob/663b05b4ffba84ee633a6fda6e0ed5040def2ddd/A/Picture/2.jpg)
