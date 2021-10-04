@@ -1,25 +1,25 @@
 
 # 跳过白名单次数判断
 print_pd_white_list() {
-  white_file="${MODDIR}/White_List_File/$(echo "$1" | sed 's/\///g').ini"
-  if [[ ! -e "${white_file}" ]]; then
-    echo "1" > "${white_file}"
-    logd "[continue] -[$(cat "${white_file}")]- $2"
+  white_file="$MODDIR/White_List_File/$(echo "$1" | sed 's/\///g').ini"
+  if [[ ! -e "$white_file" ]]; then
+    echo "1" > "$white_file"
+    logd "[continue] -[$(cat "$white_file")]- $2"
   else
     echo "- [continue]: $1"
     # 小于3次则打印
-    if [[ "$(cat "${white_file}")" -lt "3" ]]; then
-      echo "$(($(cat "${white_file}")+1))" > "${white_file}"
-      logd "[continue] -[$(cat "${white_file}")]- $2"
+    if [[ "$(cat "$white_file")" -lt "3" ]]; then
+      echo "$(($(cat "$white_file")+1))" > "$white_file"
+      logd "[continue] -[$(cat "$white_file")]- $2"
     fi
   fi
 }
 
 # 小米应用商店文件夹判断
 com_xiaomi_market() {
-  if [[ "$(echo ${line} | grep "com.xiaomi.market")" != "" ]]; then
-    if [[ "$(find ${line} -name "*.apk")" != "" ]]; then
-      logd "存在APK: ${line}"
+  if [[ ! -z "$(echo "$1" | grep -w "com.xiaomi.market")" ]]; then
+    if [[ "$(find "$1" -name "*.apk")" != "" ]]; then
+      logd "存在APK: $1"
       return 2
     fi
   fi
@@ -74,7 +74,7 @@ main_for() {
         print_pd_white_list "$i" "白名单DIR: $i"
         continue
       fi
-      com_xiaomi_market
+      com_xiaomi_market "$i"
       [[ $? == 2 ]] && continue
       rm -rf "$i" && {
         let DIR++
@@ -88,7 +88,7 @@ main_for() {
         print_pd_white_list "$i" "白名单FILE: $i"
         continue
       fi
-      rm -rf "${i}" && {
+      rm -rf "$i" && {
         let FILE++ 
         logd "[rm] --黑名单FILE: $i"
         echo "$FILE" > $tmp_date/file
@@ -97,28 +97,29 @@ main_for() {
   done
 }
 
-MODDIR=${0%/*}
-. ${MODDIR}/clear_the_blacklist_functions.sh
+MODDIR="${0%/*}"
+. "$MODDIR/clear_the_blacklist_functions.sh"
 
-if [[ "${Screen}" == "亮屏" ]]; then
+if [[ "$Screen" == "亮屏" ]]; then
   echo "- 亮屏状态"
   if [[ ! -f $MODDIR/tmp/Screen_on ]]; then
     echo "true" > $MODDIR/tmp/Screen_on
-    logd "[状态]: [I]$Screen 执行"
+    logd "[状态]: [$Screen] 执行"
   fi
   [[ ! -d $MODDIR/White_List_File ]] && mkdir -p $MODDIR/White_List_File
   [[ ! -d $MODDIR/tmp/DATE ]] && mkdir -p $MODDIR/tmp/DATE
   tmp_date="$MODDIR/tmp/DATE/$(date '+%Y%m%d')"
   if [[ ! -d "$tmp_date" ]]; then
-    rm -rf "$MODDIR/tmp/DATE/*/" >/dev/null 2>&1
+    rm -rf $MODDIR/tmp/DATE/*/ >/dev/null 2>&1
     mkdir -p $tmp_date
     echo "0" > $tmp_date/file
     echo "0" > $tmp_date/dir
     # 文件大小
-    filesize="$(ls -l ${log} | awk '{print $5}')"
+    #filesize="$(ls -l ${log} | awk '{print $5}')"
     # 3kb
-    maxsize="$((1024*3))"
-    [[ $filesize -gt $maxsize ]] && log_md_clear
+    #maxsize="$((1024*3))"
+    #[[ $filesize -gt $maxsize ]] && 
+    log_md_clear
   fi
   FILE="$(cat $tmp_date/file)"
   DIR="$(cat $tmp_date/dir)"
@@ -136,7 +137,7 @@ else
   echo "- 息屏状态"
   if [[ -f $MODDIR/tmp/Screen_on ]]; then
     rm -rf $MODDIR/tmp/Screen_on
-    logd "[状态]: [W]$Screen 不执行"
+    logd "[状态]: [$Screen] 不执行"
   fi
 fi
 
