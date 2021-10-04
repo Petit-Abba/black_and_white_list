@@ -72,6 +72,10 @@ else
                   kill -9 ${kill_pid} && MyPrint "- 杀死crond进程: ${kill_pid}"
                done
             fi
+            tmp_date="$MODPATH/script/tmp/DATE/$(date '+%Y%m%d')"
+            mkdir -p $tmp_date
+            echo "0" > $tmp_date/file
+            echo "0" > $tmp_date/dir
             rm -rf ${black_and_white_list_path} && MyPrint "- 删除${black_and_white_list_path}文件夹"
             MyPrint " "
          else
@@ -81,6 +85,29 @@ else
             [[ -f ${script_dir}/set_cron.d/root ]] && cp -r ${script_dir}/set_cron.d/root ${MODPATH}/script/set_cron.d/
             [[ -d ${script_dir}/White_List_File ]] && cp -r ${script_dir}/White_List_File/ ${MODPATH}/script/
             [[ -f ${mod_path}/print_set ]] && cp -r ${mod_path}/print_set ${MODPATH}/
+            # 白名单叠加更新
+            Whitelist_overlay_update() {
+               local IFS=$'\n'
+               local num=0
+               Subscriber_White_List="$(cat ${White_List})"
+               Module_White_List="$(cat ${MODPATH}/AndroidFile/白名单.prop)"
+               for new_rule in $Module_White_List; do
+                  [[ -z "$(echo "$Subscriber_White_List" | grep -w "^${new_rule}$")" ]] && {
+                     [[ $num == 0 ]] && {
+                        echo "- [&] 白名单.prop规则追加更新 (在黑白列表中，白名单列表优先级最高。)"
+                        echo "#========================================" >> $White_List
+                        echo "# 追加更新($(date +'%Y%m%d %T'))" >> $White_List
+                        echo "#========================================" >> $White_List
+                     }
+                     let num++
+                     echo "- $num.追加: $new_rule"
+                     echo "$new_rule" >> $White_List
+                  }
+               done
+               [[ $num != 0 ]] && echo "#========================================" >> $White_List
+            }
+            Whitelist_overlay_update
+            MyPrint "- 完成"
             MyPrint " "
          fi
       }

@@ -1,15 +1,18 @@
 #为了防止手残 可以把不被删除的文件或者文件夹输入进来
 #下面是例子 一行一个
 
+# 本模块文件
 /sdcard/Android/clear_the_blacklist/*.prop
 /sdcard/Android/clear_the_blacklist/*.md
 /sdcard/Android/clear_the_blacklist/*/*.sh
 /sdcard/Android/clear_the_blacklist/*/*.ini
 
-
+# 重要目录和文件
 /*/
 /data/
 /data/*/
+/data/adb/*
+/data/adb/*/*
 /data/media/0/
 /data/media/0/Download/
 /data/media/0/Android/
