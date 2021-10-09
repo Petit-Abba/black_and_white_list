@@ -16,7 +16,7 @@ log_md_clear() {
    logd "正常运行: [$root_file_dir/root]"
    logd "------------------------------------------------------------"
    logd " "
-   logd "当然状态: ${Screen}"
+   logd "当前状态: ${Screen}"
 }
 
 log_md_set_cron_clear() {
