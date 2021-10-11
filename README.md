@@ -53,11 +53,11 @@
 /data/system/dropbox/*
 
 # app应用的所有缓存文件夹内的所有文件(缓存规则)
-/data/data/*/*cache*/*
+/data/user/*/*/*cache*/*
 # 如果你使用了缓存规则后有app出现加载问题
 # 可以在白名单中添加相应路径进行跳过
 # 比如跳过清理酷安的缓存(其他同理 正常来说清理缓存并不影响应用任何东西): 
-# /data/data/com.coolapk.market/*cache*/*
+# /data/user/*/com.coolapk.market/*cache*/*
 ```
 
 ## 黑白名单示意图
