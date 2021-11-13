@@ -24,6 +24,7 @@
 /data/media/0/Movies/
 /data/media/0/Music/
 /data/media/0/Pictures/
+/data/media/0/*/
 
 /storage/
 /storage/emulated/0/
@@ -37,6 +38,7 @@
 /storage/emulated/0/Movies/
 /storage/emulated/0/Music/
 /storage/emulated/0/Pictures/
+/storage/emulated/0/*/
 
 /sdcard/
 /sdcard/Download/
@@ -49,6 +51,8 @@
 /sdcard/Movies/
 /sdcard/Music/
 /sdcard/Pictures/
+/sdcard/*/
+
 
 
 
