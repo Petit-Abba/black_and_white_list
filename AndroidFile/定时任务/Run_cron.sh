@@ -1,6 +1,6 @@
 #全局变量
 module="/data/adb/modules/crond_clear_the_blacklist"
-moduleksu="/data/adb/ksu/modules/crond_clear_the_blacklist/"
+moduleksu="/data/adb/ksu/modules/crond_clear_the_blacklist"
 if [[ -d "$module" ]]; then
   mod_path=$module
 else
