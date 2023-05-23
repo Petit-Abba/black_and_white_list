@@ -7,8 +7,6 @@
 /data/media/0/ramdump/
 
 #如果文件删除不了，不到万不得已才使用[ /data/media/0/"文件\文件夹" ]
-#下方标识符用于输入black文件路径，请勿删除。
-#black标识符
 
 #下面你可以自定义了！
 /storage/emulated/0/Download/.common
