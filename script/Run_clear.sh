@@ -22,7 +22,7 @@ main_for() {
       com_xiaomi_market "$i"
       [[ $? == 2 ]] && continue
       rm -rf "$i" && {
-        ((DIR++))
+        let DIR++
         logd "[rm] --黑名单DIR: $i"
         echo "$DIR" >"$tmp_date"/dir
       }
@@ -34,7 +34,7 @@ main_for() {
         continue
       fi
       rm -rf "$i" && {
-        ((FILE++))
+        let FILE++
         logd "[rm] --黑名单FILE: $i"
         echo "$FILE" >"$tmp_date"/file
       }
